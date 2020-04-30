@@ -32,11 +32,11 @@ class CourseDetails extends Component {
           {" "}
           Update{" "}
         </button>
-        <h3>Course Details</h3>
-        <div>id: {course.courseId}</div>
-        <div>Name: {course.courseName}</div>
-        <div>year: {course.semesterOffered}</div>
-        <div>Info: {course.comment}</div>
+        <h3 class="titleText-login">Course Details</h3>
+        <div class="titleText-login">id: {course.courseId}</div>
+        <div class="titleText-login">Name: {course.courseName}</div>
+        <div class="titleText-login">year: {course.semesterOffered}</div>
+        <div class="titleText-login">Info: {course.comment}</div>
       </div>
     );
   }

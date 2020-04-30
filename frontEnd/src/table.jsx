@@ -49,6 +49,10 @@ class Table extends Component {
     const courses = [course, ...this.state.courses];
     this.setState({ courses });
   };
+  handleAddToSchedule = async () => {
+    // handle the add to schedule here
+    // add the selected course to the current users schedule
+  };
   filterCoursesByName = () => {
     let courses = [this.state.courses];
     if (this.state.query) {
@@ -79,6 +83,7 @@ class Table extends Component {
           <TableBody
             courses={this.state.courses}
             onDelete={this.handleDelete}
+            onAddToSchedule={this.handleAddToSchedule}
           />
         </table>
       </React.Fragment>

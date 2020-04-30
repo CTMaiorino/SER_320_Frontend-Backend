@@ -27,7 +27,18 @@
 .App-link {
   color: #61dafb;
 }
-
+.backgroud-color {
+  background-color: rgba(12, 36, 62);
+  height: 1200px;
+  width: 100%;
+}
+.titleText {
+  text-align: center;
+  color: yellow;
+}
+.titleText-login {
+  color: yellow;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

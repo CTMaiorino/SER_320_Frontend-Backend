@@ -7,11 +7,11 @@ class TableBody extends Component {
       <tbody>
         {courses.map((course, index) => (
           <tr key={index}>
-            <td>
+            <td class="titleText-login">
               <Link to={`/courses/${course._id}`}> {course.courseName} </Link>
             </td>
-            <td>{course.courseId}</td>
-            <td>{course.semesterOffered}</td>
+            <td class="titleText-login">{course.courseId}</td>
+            <td class="titleText-login">{course.semesterOffered}</td>
             <td>
               <button
                 onClick={() => {
@@ -20,6 +20,16 @@ class TableBody extends Component {
                 className="btn btn-danger btn-sm"
               >
                 Delete
+              </button>
+            </td>
+            <td>
+              <button
+                onClick={() => {
+                  this.props.onAddToSchedule(course);
+                }}
+                className="btn btn-primary btn-sm"
+              >
+                Add to Schedule
               </button>
             </td>
           </tr>
