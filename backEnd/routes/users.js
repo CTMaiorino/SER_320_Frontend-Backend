@@ -4,6 +4,7 @@ var passport = require("passport");
 var User = require("../models/user"); // user model added
 var Verify = require("./verify"); // verfication
 const bcrypt = require("bcrypt");
+var ObjectId = require("mongodb").ObjectID;
 /* GET users listing. */
 // verification is added to all get requests
 router.get("/", Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (
@@ -22,7 +23,11 @@ router.get("/", Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (
 // 3- register a new user on end poitn register, info is sent as a json object
 router.post("/register", async function (req, res) {
   User.register(
-    new User({ username: req.body.username }),
+    new User({
+      id: new ObjectId(),
+      username: req.body.username,
+      password: req.body.password,
+    }),
     req.body.password,
     function (err, user) {
       if (err) return res.status(500).json({ err: err });

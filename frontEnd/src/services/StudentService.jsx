@@ -2,7 +2,7 @@ import http from "./httpService";
 import { apiUrl } from "../config.json";
 import { getJwt } from "./authService";
 
-const apiEndpoint = apiUrl + "/users";
+const apiEndpoint = apiUrl + "users";
 
 function studentUrl(id) {
   return `${apiEndpoint}/${id}`;

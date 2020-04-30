@@ -31,10 +31,10 @@ class Table extends Component {
   }
   handleDelete = async (course) => {
     const courses = [...this.state.courses];
-    const newCoures = courses.filter((c) => c.id !== course.id);
+    const newCoures = courses.filter((c) => c._id !== course._id);
     this.setState({ courses: newCoures });
     try {
-      await deleteCourse(course.id);
+      await deleteCourse(course._id);
     } catch (ex) {
       console.log("delete exception");
       if (ex.respond && ex.respond.status === 404)
@@ -43,7 +43,7 @@ class Table extends Component {
     }
   };
   handleAdd = async () => {
-    const obj = { id: "491", name: "SER", semesterOffered: "SP" };
+    const obj = { courseId: "491", courseName: "SER", semesterOffered: "SP" };
     const { data: course } = await saveCourse(obj);
     console.log(course);
     const courses = [course, ...this.state.courses];
@@ -76,7 +76,10 @@ class Table extends Component {
         </button>
         <table className="table">
           <TableHead />
-          <TableBody courses={courses} onDelete={this.handleDelete} />
+          <TableBody
+            courses={this.state.courses}
+            onDelete={this.handleDelete}
+          />
         </table>
       </React.Fragment>
     );

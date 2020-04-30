@@ -2,19 +2,16 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 class TableBody extends Component {
   render() {
-    const { courses } = this.props; //this.props.people
+    const { courses } = this.props;
     return (
       <tbody>
         {courses.map((course, index) => (
           <tr key={index}>
             <td>
-              <Link to={`/student/${course.id}`}>
-                {" "}
-                {course.name} {course.semesterOffered}{" "}
-              </Link>
+              <Link to={`/courses/${course._id}`}> {course.courseName} </Link>
             </td>
-            <td></td>
-            <td></td>
+            <td>{course.courseId}</td>
+            <td>{course.semesterOffered}</td>
             <td>
               <button
                 onClick={() => {

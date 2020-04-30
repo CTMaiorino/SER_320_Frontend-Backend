@@ -15,7 +15,7 @@ coursesRouter
   .route("/")
   .get(Verify.verifyOrdinaryUser, function (req, res, next) {
     Courses.find({})
-      .populate("comments.postedby")
+      .populate("_id")
       .exec(function (err, course) {
         if (err) throw err;
         res.json(course);
@@ -54,8 +54,8 @@ coursesRouter
     res,
     next
   ) {
-    Courses.findById(req.params.courseId)
-      .populate("comments.postedBy")
+    Courses.findById(req.params._id)
+      .populate("_id")
       .exec(function (err, course) {
         if (err) throw err;
         res.json(course);
@@ -67,7 +67,7 @@ coursesRouter
     next
   ) {
     Courses.findByIdAndUpdate(
-      req.params.courseId,
+      req.params._id,
       { $set: req.body },
       { new: true },
       function (err, course) {
@@ -81,7 +81,7 @@ coursesRouter
     res,
     next
   ) {
-    Courses.findByIdAndRemove(req.params.courseId, function (err, course) {
+    Courses.findByIdAndRemove(req.params._id, function (err, course) {
       if (err) throw err;
       res.json(course);
     });
@@ -93,8 +93,8 @@ coursesRouter
   .route("/:courseId/comments")
   .all(Verify.verifyOrdinaryUser)
   .get(function (req, res, next) {
-    Courses.findById(req.params.courseId)
-      .populate("comments.postedby") //1.1.6 add code to populate recipe
+    Courses.findById(req.params._id)
+      .populate("_id") //1.1.6 add code to populate recipe
       .exec(function (err, course) {
         if (err) throw err;
         res.json(course.comments); //retrun recipe.comments
@@ -102,7 +102,7 @@ coursesRouter
   })
 
   .post(function (req, res, next) {
-    Courses.findById(req.params.courseId, function (err, course) {
+    Courses.findById(req.params._id, function (err, course) {
       if (err) throw err;
 
       req.body.postedby = req.decoded._doc._id; //1.1.1. set postedBy id to the _id of the user from the users document
@@ -119,7 +119,7 @@ coursesRouter
 
   .delete(Verify.verifyAdmin, function (req, res, next) {
     //1.1.5 verification added
-    Courses.findById(req.params.courseId, function (err, course) {
+    Courses.findById(req.params._id, function (err, course) {
       if (err) throw err;
       for (var i = course.comments.length - 1; i >= 0; i--) {
         //remove comments one at a time using a loop since remove does not support an array
@@ -139,8 +139,8 @@ coursesRouter
   .route("/:courseId/comments/:commentId")
   .all(Verify.verifyOrdinaryUser) //1.1.6 verification added
   .get(function (req, res, next) {
-    Courses.findById(req.params.courseId)
-      .populate("comments.postedby") //1.1.6 add code to populate recipe
+    Courses.findById(req.params._id)
+      .populate("_id") //1.1.6 add code to populate recipe
       .exec(function (err, course) {
         if (err) throw err;
         res.json(course.comments.id(req.params.commentId)); //return the comment using commentid in the respond object
@@ -150,7 +150,7 @@ coursesRouter
   .put(function (req, res, next) {
     // We delete the existing commment and insert the updated
     // comment as a new comment
-    Courses.findById(req.params.courseId, function (err, course) {
+    Courses.findById(req.params._id, function (err, course) {
       if (err) throw err;
       course.comments.id(req.params.commentId).remove(); //remove comment
 
@@ -166,7 +166,7 @@ coursesRouter
   })
 
   .delete(function (req, res, next) {
-    Courses.findById(req.params.CourseId, function (err, course) {
+    Courses.findById(req.params._id, function (err, course) {
       //1.1.2 deletion is allowed to a specific user
       if (
         course.comments.id(req.params.commentId).postedby !=

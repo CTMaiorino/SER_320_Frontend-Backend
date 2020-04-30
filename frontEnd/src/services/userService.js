@@ -8,7 +8,5 @@ export function register(user) {
     //match user
     username: user.username,
     password: user.password,
-    lastname: user.lastname,
-    firstname: user.firstname,
   });
 }
