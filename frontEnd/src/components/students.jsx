@@ -17,13 +17,14 @@ class Students extends Component {
   };
   render() {
     let sortedStudents = this.sortStudents();
+    const { students } = this.props;
     return (
       <div>
         <h1>Students</h1>
         <ul>
           {sortedStudents.map((Student) => (
             <li key={Student.id}>
-              <Link to={`/students/${Student.id}`}>{Student.name}</Link>
+              <Link to={`/student/${Student.id}`}>{Student.name}</Link>
             </li>
           ))}
         </ul>

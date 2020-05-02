@@ -5,9 +5,10 @@ var User = require("../models/user"); // user model added
 var Verify = require("./verify"); // verfication
 const bcrypt = require("bcrypt");
 var ObjectId = require("mongodb").ObjectID;
+var Course = require("../models/courses");
 /* GET users listing. */
 // verification is added to all get requests
-router.get("/", Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (
+router.get("/",  function (
   req,
   res,
   next
@@ -27,6 +28,8 @@ router.post("/register", async function (req, res) {
       id: new ObjectId(),
       username: req.body.username,
       password: req.body.password,
+      firstname : req.body.firstname,
+      lastname : req.body.lastname
     }),
     req.body.password,
     function (err, user) {
@@ -81,5 +84,65 @@ router.get("/logout", function (req, res) {
     status: "Bye!",
   });
 });
-
+router.get("/:userId", (req, res, next) => {
+  User.findById(req.params.userId, (err, user) => {
+    if (err) throw err;
+    console.log(user)
+    res.json(user);
+  });
+});
+router.get("/:userId/student", (req, res, next) => {
+  console.log("GET /:userId/students");
+  User.findById(req.params.userId)
+  .populate('studentList')
+  .exec((err, user) => {
+    if (err) throw err;
+   res.json(user.studentList);
+  });
+});
+router.post("/:userId/:studentId", (req, res, next) => {
+  User.findById(req.params.userId, (err, user) => {
+    if (err) throw err;
+    console.log(user)
+      User.findById(req.params.studentId,(err, student)=>{
+        if (err) throw err;
+        console.log(student)
+        user.addStudent(student);
+        user.save( (err, user)=>{
+          if (err) throw err;
+          console.log('Updated student list!');
+          res.json(user);
+      });
+        
+      })
+      
+  });
+});
+router.get("/:userId/courses", (req, res, next) => {
+  console.log("GET /:userId/courses");
+  User.findById(req.params.userId)
+  .populate('registeredCourses')
+  .exec((err, user) => {
+    if (err) throw err;
+   res.json(user.registeredCourses);
+  });
+});
+router.post("/:userId/courses/:courseId", (req, res, next) => {
+  User.findById(req.params.userId, (err, user) => {
+    if (err) throw err;
+    console.log(user)
+      Course.findById(req.params.courseId,(err, course)=>{
+        if (err) throw err;
+        console.log(course)
+        user.addCourse(course);
+        user.save( (err, user)=>{
+          if (err) throw err;
+          console.log('Updated course list!');
+          res.json(user);
+      });
+        
+      })
+      
+  });
+});
 module.exports = router;

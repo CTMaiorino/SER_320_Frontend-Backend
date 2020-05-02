@@ -13,7 +13,7 @@ coursesRouter.use(bodyParser.json());
 /* GET home page. */
 coursesRouter
   .route("/")
-  .get(Verify.verifyOrdinaryUser, function (req, res, next) {
+  .get( function (req, res, next) {
     Courses.find({})
       .populate("_id")
       .exec(function (err, course) {
@@ -49,7 +49,7 @@ coursesRouter
 
 coursesRouter
   .route("/:courseId") //courseId router
-  .get(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function (
+  .get( function (
     req,
     res,
     next

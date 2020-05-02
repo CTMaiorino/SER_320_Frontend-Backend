@@ -24,7 +24,6 @@ export async function logout() {
   console.log(respond);
   localStorage.removeItem(tokenKey);
 }
-
 export function getCurrentUser() {
   try {
     const jwt = localStorage.getItem(tokenKey);

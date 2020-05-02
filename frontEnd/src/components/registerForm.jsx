@@ -15,6 +15,7 @@ class RegisterForm extends Form {
     password: Joi.string().required().min(5).label("Password"),
     firstname: Joi.string().required().label("Firstname"),
     lastname: Joi.string().required().label("Lastname"),
+    
   };
 
   doSubmit = async () => {

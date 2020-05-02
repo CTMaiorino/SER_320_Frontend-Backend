@@ -1,6 +1,6 @@
 import http from "./httpService";
 import { apiUrl } from "../config.json";
-import { getJwt } from "./authService";
+import { getJwt, getCurrentUser } from "./authService";
 
 const apiEndpoint = apiUrl + "users";
 
@@ -31,4 +31,18 @@ export function saveStudent(student) {
 export function deleteStudent(studentId) {
   http.setJwt(getJwt());
   return http.delete(studentUrl(studentId));
+}
+export function getStudentList(userId) {
+  http.setJwt(getJwt());
+
+  console.log("Running getStudentList with Id : "+ userId);
+
+  return http.get(studentUrl(userId) + "/student");
+}
+export function getCourseList(userId) {
+  http.setJwt(getJwt());
+
+  console.log("Running getCourseList with Id : "+ userId);
+
+  return http.get(studentUrl(userId) + "/courses");
 }

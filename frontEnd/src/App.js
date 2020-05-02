@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./table";
 import NavBar from "./components/navBar";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Students from "./components/students";
+
 import About from "./components/about";
 import NotFound from "./components/notFound";
 import StudentDetails from "./components/studentDetails";
@@ -11,6 +11,7 @@ import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import auth from "./services/authService";
 import Logout from "./components/logout";
+import studentTable from "./studentTable";
 class App extends Component {
   state = {};
 
@@ -30,10 +31,7 @@ class App extends Component {
             <Route path="/register" component={RegisterForm}></Route>
             <Route path="/courses/:id" component={CourseDetails} />
             <Route path="/student/:id" component={StudentDetails} />
-            <Route
-              path="/students"
-              render={(props) => <Students sortBy="name" {...props} />}
-            ></Route>
+            <Route path="/students" component={studentTable} />
             <Route path="/logout" component={Logout} />
             <Route path="/about" component={About}></Route>
             <Route path="/not-found" component={NotFound}></Route>

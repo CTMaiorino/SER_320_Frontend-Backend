@@ -8,5 +8,8 @@ export function register(user) {
     //match user
     username: user.username,
     password: user.password,
+    studentList : [],
+    registeredCourses : []
+
   });
 }
